@@ -28,76 +28,54 @@
   </head>
   <body>
     <div class="container-scroller">
-      <!-- partial:partials/_sidebar.html -->
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo text-white" href="{{url_for('index')}}">PPES DTR System</a>
-          <a class="sidebar-brand brand-logo-mini" href="{{url_for('index')}}">PPES DTR System</a>
-        </div>
-        <ul class="nav">
-          <li class="nav-item nav-category">
-            <span class="nav-link">Navigation</span>
-          </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="{{url_for('records')}}">
-              <span class="menu-icon">
-                <i class="bi bi-card-checklist"></i>
-              </span>
-              <span class="menu-title">Attendance Records</span>
-            </a>
-          </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link"  href="{{url_for('emp_list')}}">
-              <span class="menu-icon">
-                <i class="bi bi-card-checklist"></i>
-              </span>
-              <span class="menu-title"  >List of Employees</span>
-            </a>
-          </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="{{url_for('register')}}">
-              <span class="menu-icon">
-                <i class="bi bi-pencil-square"></i>
-              </span>
-              <span class="menu-title">Register</span>
-            </a>
-          </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <span class="menu-icon">
-                <i class="mdi mdi-security"></i>
-              </span>
-              <span class="menu-title">Time In</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" data-toggle="modal" data-target="#inam">IN AM </a></li>
-                <li class="nav-item"> <a class="nav-link" data-toggle="modal" data-target="#inpm">IN PM</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#out" aria-expanded="false" aria-controls="auth">
-              <span class="menu-icon">
-                <i class="mdi mdi-security"></i>
-              </span>
-              <span class="menu-title">Time Out</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="out">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" data-toggle="modal" data-target="#outam">OUT AM </a></li>
-                <li class="nav-item"> <a class="nav-link" data-toggle="modal" data-target="#outpm"> OUT PM</a></li>
-              </ul>
-            </div>
-          </li>
-        </ul>
-      </nav>
+   <!-- partial:partials/_sidebar.html -->
+   <nav class="sidebar sidebar-offcanvas bg-primary" id="sidebar">
+    <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center  bg-primary justify-content-center fixed-top">
+      <a class="sidebar-brand brand-logo bg-primary" href="{{url_for('adminpg')}}">PPES DTR System</a>
+      <a class="sidebar-brand brand-logo-mini" href="{{url_for('records')}}">PPES DTR System</a>
+    </div>
+    <ul class="nav">
+      <li class="nav-item nav-category">
+        <span class="nav-link text-white"><i>Navigation</i></span>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{{url_for('records')}}">
+          <span >
+            <i class="bi bi-card-checklist"></i>
+          </span>
+          <span class="menu-title ">Attendance Records</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link"  href="{{url_for('emp_list')}}">
+          <span >
+            <i class="bi bi-card-checklist"></i>
+          </span>
+          <span class="menu-title text-white" >List of Employees</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{{url_for('register')}}">
+          <span class="">
+            <i class="bi bi-pencil-square text-warning"></i>
+          </span>
+          <span class="menu-title text-white">Register an Employee</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{{url_for('sign_out')}}">
+          <span class="">
+            <i class="bi bi-pencil-square text-warning"></i>
+          </span>
+          <span class="menu-title text-white">Sign out</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
       <!-- partial -->
       
         <!-- partial -->
-        <div class="main-panel">
+        <div class="main-panel bg-secondary" style="padding-top:5px;">
           
           
           <p class="card-description">  {% with messages = get_flashed_messages() %}
@@ -110,11 +88,11 @@
                 
             {% endif %}
         {% endwith %} </p>
-            <div class="row ">
+            <div class="row bg-secondary ">
               <div class="col-12 grid-margin">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Attendance Record</h4>
+                <div class="card border border-secondary">
+                  <div class="card-body bg-secondary ">
+                    <h4 class="card-title text-primary">Attendance Record</h4>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -129,10 +107,9 @@
                             <th>RFID  </th>
                             <th>Employee Name</th>
                             <th> Date </th>
-                            <th> Time in ~AM~</th>
-                            <th> Time out ~AM~ </th>
-                            <th> Time in ~PM~ </th>
-                            <th> Time out ~PM~ </th>
+                            <th> Shift</th>
+                            <th> Time in  </th>
+                            <th> Time out </th>
                           </tr>
                         </thead>
                         <tbody>
@@ -287,15 +264,12 @@
   </div>
 </form>
 <!--end time out pm -->
-          </br>
-        </br>
-      </br>
-    </br>
+        
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
-          <footer class="footer">
+          <footer class="footer text-white bg-primary">
             <div class="d-sm-flex justify-content-center justify-content-sm-between">
-              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © PPES DTR System 2024</span>
+              <span class="text-white bg-primary d-block text-center text-sm-left d-sm-inline-block">Copyright © PPES DTR System 2024</span>
           </footer>
         
     <!-- container-scroller -->

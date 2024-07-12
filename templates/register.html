@@ -27,81 +27,59 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   </head>
-  <body>
-    <div class="container-scroller">
+  <body class="bg-primary">
+    <div class="container-scroller bg-primary">
       <!-- partial:partials/_sidebar.html -->
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo text-white" href="{{url_for('index')}}">PPES DTR System</a>
-          <a class="sidebar-brand brand-logo-mini" href="{{url_for('index')}}">PPES DTR System</a>
+      <nav class="sidebar sidebar-offcanvas bg-primary" id="sidebar">
+        <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center  bg-primary justify-content-center fixed-top">
+          <a class="sidebar-brand brand-logo bg-primary" href="{{url_for('adminpg')}}">PPES DTR System</a>
+          <a class="sidebar-brand brand-logo-mini" href="{{url_for('records')}}">PPES DTR System</a>
         </div>
         <ul class="nav">
           <li class="nav-item nav-category">
-            <span class="nav-link">Navigation</span>
+            <span class="nav-link text-white"><i>Navigation</i></span>
           </li>
           <li class="nav-item menu-items">
             <a class="nav-link" href="{{url_for('records')}}">
-              <span class="menu-icon">
+              <span >
                 <i class="bi bi-card-checklist"></i>
               </span>
-              <span class="menu-title">Attendance Records</span>
+              <span class="menu-title text-white">Attendance Records</span>
             </a>
           </li>
           <li class="nav-item menu-items">
             <a class="nav-link"  href="{{url_for('emp_list')}}">
-              <span class="menu-icon">
+              <span >
                 <i class="bi bi-card-checklist"></i>
               </span>
-              <span class="menu-title" >List of Employees</span>
+              <span class="menu-title text-white" >List of Employees</span>
             </a>
           </li>
           <li class="nav-item menu-items">
             <a class="nav-link" href="{{url_for('register')}}">
-              <span class="menu-icon">
-                <i class="bi bi-pencil-square"></i>
+              <span class="">
+                <i class="bi bi-pencil-square text-warning"></i>
               </span>
-              <span class="menu-title">Register</span>
+              <span class="menu-title ">Register an Employee</span>
             </a>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <span class="menu-icon">
-                <i class="mdi mdi-security"></i>
+            <a class="nav-link" href="{{url_for('sign_out')}}">
+              <span class="">
+                <i class="bi bi-pencil-square text-warning"></i>
               </span>
-              <span class="menu-title">Time In</span>
-              <i class="menu-arrow"></i>
+              <span class="menu-title text-white">Sign out</span>
             </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" data-toggle="modal" data-target="#inam">IN AM </a></li>
-                <li class="nav-item"> <a class="nav-link" data-toggle="modal" data-target="#inpm"> IN PM</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#out" aria-expanded="false" aria-controls="auth">
-              <span class="menu-icon">
-                <i class="mdi mdi-security"></i>
-              </span>
-              <span class="menu-title">Time Out</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="out">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" data-toggle="modal" data-target="#outam">OUT AM </a></li>
-                <li class="nav-item"> <a class="nav-link" data-toggle="modal" data-target="#outpm" >OUT PM</a></li>
-              </ul>
-            </div>
           </li>
         </ul>
       </nav>
       <!-- partial -->
       
         <!-- partial -->
-        <div class="regmain-panel" style="margin-top:0px;">
+        <div class="regmain-panel bg-secondary" style="margin-top:0px;">
           <center>
           <div class="col-md-6 grid-margin stretch-card">
-            <div class="card">
+            <div class="card bg-primary">
               <div class="card-body">
                 <h4 class="card-title">Register as Faculty</h4>
                 <p class="card-description"> *Make sure all the information are correct before submitting  </p>
@@ -110,7 +88,7 @@
 
                       
                       {% for message in messages %}
-                          <h6 class="text-white text-center" style="color:red;">{{ message }}</h6>
+                          <h6 class="text-white text-center text-{{res}}" style="color:red;">{{ message }}</h6>
                       {% endfor %}
                       
                   {% endif %}
@@ -125,174 +103,68 @@
                   <div class="form-group row">
                     <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Photo</label>
                     <div class="col-sm-9">
-                      <input type="file" class="form-control" name="pic" id="inputField" placeholder="photo" accept=".jpg, .jpeg, .png, .webp, .jfif, .gif"  required>
+                      <input type="file" class="form-control border border-secondary text-dark bg-secondary" name="pic" id="inputField" placeholder="photo" accept=".jpg, .jpeg, .png, .webp, .jfif, .gif"  required>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="exampleInputMobile" class="col-sm-3 col-form-label">First Name</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" name="fn" id="fn" placeholder="First Name"  required>
+                      <input type="text" class="form-control  border border-secondary bg-secondary" name="fn" id="fn" placeholder="First Name"  required>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Last Name</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" name="ln" id="ln" placeholder="Last Name"  required>
+                      <input type="text" class="form-control  border border-secondary bg-secondary" name="ln" id="ln" placeholder="Last Name"  required>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Shift</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control  border border-secondary bg-secondary" name="shift" id="shift" placeholder="AM-PM"  required>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Department</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" name="dep" id="dep" placeholder="Department"  required>
+                      <input type="text" class="form-control  border border-secondary bg-secondary" name="dep" id="dep" placeholder="Department"  required>
                     </div>
                   </div>
                   
-                  <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal">Next</button>
-                  <button class="btn btn-dark"><a class="btn btn-dark" href="{{url_for('index')}}"> Cancel</a></button>
-                  
-                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <button type="button" class="btn btn-secondary mr-2" data-toggle="modal" data-target="#exampleModal">Next</button>
+                  <button class="btn btn-dark"><a class="text-white" href="{{url_for('adminpg')}}"> Cancel</a></button>
+
+                 
+                  <div class="modal fade " id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
+                      <div class="modal-content border  border-secondary bg-secondary text-dark">
+                        <div class="modal-header border-bottom border-primary">
                           <h5 class="modal-title" id="exampleModalLabel">RFID Confirmation</h5>
 
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body2">
                           <h3>*Please tap the RFID card to confirm registration</h3>
-                          <p class="card-description" style="text-color:red;"> *Make sure the input field is cleared when ressubmitting</p>
+                          <p class="card-description text-muted" style="text-color:red;"> *Make sure the input field is cleared when ressubmitting</p>
                   
                           <div class="form-group row">
-                           
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" name="rfid" id="rfid" placeholder="Employee ID / RF Id" required>
+                              <input type="text" class="form-control border border-secondary text-white bg-white" name="rfid"   autofocus  required >
                             </div>
                           </div>
                         </div>
-                        <div class="modal-footer">
-                          <button type="Cancel" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <div class="modal-footer border-top border-primary">
+                          <button type="submit" class="btn btn-secondary" ></button>
+                          <button type="Cancel" class="btn btn-dark" data-dismiss="modal">Cancel</button>
                         </div>
                       </form>
                     </div>
                   </div>
               </div>
             </center>
-            <!-- time in am -->
-            <form action="/inam" method="post">
-              <div class="modal fade" id="inam" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">RFID Confirmation</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                              </button>
-                          </div>
-                          <div class="modal-body">
-                              <h3>*Please tap the RFID card to Time In</h3>
-                              <p class="card-description" style="color: red;"> *Make sure the input field is cleared when resubmitting</p>
-                              <div class="form-group row">
-                                  <div class="col-sm-9">
-                                      <input type="text" class="form-control" name="trfid" id="trfid" placeholder="Employee ID / RFID" required>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button type="submit" class="btn btn-secondary">Submit</button>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </form>
-          <!--end time in am -->
-
-          <!-- time in pm -->
-    <form action="/inpm" method="post">
-      <div class="modal fade" id="inpm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">RFID Confirmation</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
-                  <div class="modal-body">
-                      <h3>*Please tap the RFID card to Time In (PM)</h3>
-                      <p class="card-description" style="color: red;"> *Make sure the input field is cleared when resubmitting</p>
-                      <div class="form-group row">
-                          <div class="col-sm-9">
-                              <input type="text" class="form-control" name="trfid" id="trfid" placeholder="Employee ID / RFID" required>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="submit" class="btn btn-secondary">Submit</button>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </form>
-   <!--end time in pm -->
-
-     <!-- time out am -->
-     <form action="/outam" method="post">
-      <div class="modal fade" id="outam" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">RFID Confirmation</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
-                  <div class="modal-body">
-                      <h3>*Please tap the RFID card to Time Out (AM)</h3>
-                      <p class="card-description" style="color: red;"> *Make sure the input field is cleared when resubmitting</p>
-                      <div class="form-group row">
-                          <div class="col-sm-9">
-                              <input type="text" class="form-control" name="trfid" id="trfid" placeholder="Employee ID / RFID" required>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="submit" class="btn btn-secondary">Submit</button>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </form>
-   <!--end time out am -->
-   <!-- time out pm -->
-   <form action="/outpm" method="post">
-    <div class="modal fade" id="outpm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">RFID Confirmation</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h3>*Please tap the RFID card to Time Out (AM)</h3>
-                    <p class="card-description" style="color: red;"> *Make sure the input field is cleared when resubmitting</p>
-                    <div class="form-group row">
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="trfid" id="trfid" placeholder="Employee ID / RFID" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
- <!--end time out pm -->
+            
             </div>
           </div>
         </div>
@@ -305,9 +177,9 @@
       
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
-          <footer class="footer">
+          <footer class="footer text-white bg-primary">
             <div class="d-sm-flex justify-content-center justify-content-sm-between">
-              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © PPES DTR System 2024</span>
+              <span class="text-white bg-primary d-block text-center text-sm-left d-sm-inline-block">Copyright © PPES DTR System 2024</span>
           </footer>
           <!-- partial -->
         </div>
@@ -343,6 +215,13 @@
       $('#exampleModal').on('hidden.bs.modal', function () {
         // Clear the value of each input field
         $('#exampleModal input[type="text"]').val('');
+      });
+    </script>
+    <script>
+      // Reset input fields when modal is closed
+      $('#exampleModal').on('shown.bs.modal', function () {
+        // Clear the value of each input field
+        $(this).find('[autofocus]').focus();
       });
     </script>
 

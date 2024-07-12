@@ -21,10 +21,10 @@ conn = mysql.connect()
 cursor = conn.cursor()
 
 
-@app.route("/",methods=["POST", "GET"])
+@app.route("/user",methods=["POST", "GET"])
 def index():
     current_date = date.today().strftime("%Y-%m-%d")
-    return render_template("index.html", date=current_date, time=current_time)
+    return render_template("land.html", date=current_date, time=current_time)
 
 @app.route('/current_time')
 def current_time():
@@ -36,8 +36,8 @@ def current_date():
     current_date = datetime.now().strftime("%Y-%m-%d")
     return jsonify({'current_date': current_date})
 
-@app.route('/inam',methods=["POST", "GET"])
-def inam():
+@app.route('/lgin',methods=["POST", "GET"])
+def lgin():
     cursor.execute('SELECT * FROM employees') 
     data = cursor.fetchall() 
     all_rfid = [] 
@@ -55,204 +55,102 @@ def inam():
         
         
     if request.method == "POST":
-        rfid=request.form['trfid'] 
+        rfid=request.form['id'] 
         
         justcurrent_date = datetime.now().strftime("%Y-%m-%d")
         justcurrent_time = datetime.now().strftime("%H:%M:%S")
-       
-      
-        if rfid in all_rfid:
-            if rfid in all_drfid and justcurrent_date in all_date:
-                pass
-            else:
-                cursor.execute('SELECT * FROM employees WHERE rfid=%s',(rfid)) 
-                account = cursor.fetchone()
-                print(account)
-                name =(account[3]+" "+account[4])
-                print(account)
-                img =account[1]  
-            
-                query= "INSERT INTO `data`(`rfid`, `img`, `emp_name`, `date`, `time_inAm`, `time_outAm`, `time_inPm`, `time_outPm`) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s)"
-                values = (rfid,img,name,justcurrent_date,justcurrent_time,"-","-","-")
-                cursor.execute(query,values)
-                conn.commit()
-                flash('**Successfully Timed in**', 'success')
-         
-        else:
-            flash('**RFID not found!**', 'error')
-           
-    cursor.execute('SELECT * FROM data') 
-    datas = list(cursor.fetchall())
+        cursor.execute('SELECT * FROM employees WHERE rfid=%s', (rfid)) 
+        account = cursor.fetchone()
+        
     
-    return render_template("records.html",datas=datas)
-
-@app.route('/inpm',methods=["POST", "GET"])
-def inpm():
-    cursor.execute('SELECT * FROM employees') 
-    data = cursor.fetchall() 
-    all_rfid = [] 
-    for i in data:
-        all_rfid.append(i[2])
-        print(all_rfid)
-        
-    cursor.execute('SELECT * FROM data') 
-    datas = cursor.fetchall() 
-    all_date = []
-    all_drfid = [] 
-    for i in datas:
-        all_date.append(i[4])
-        all_drfid.append(i[1])
-        
-        
-    if request.method == "POST":
-        rfid=request.form['trfid'] 
-        
-        justcurrent_date = datetime.now().strftime("%Y-%m-%d")
-        justcurrent_time = datetime.now().strftime("%H:%M:%S")
-       
-      
-        if rfid in all_rfid:
-            if rfid in all_drfid and justcurrent_date in all_date:
-                query = "UPDATE data SET time_inPm=%s WHERE rfid=%s and date=%s"
-                values = (justcurrent_time,rfid,justcurrent_date)
-                cursor.execute(query, values)
-                conn.commit()
+        if account:  # Check if account is not None
+            print(account)
+            name = account[3] + " " + account[5]
+            print(account)
+            img = account[1] 
+            shift = account[4]
+            dep = account[6]
+            
+           
+            
+            if rfid in all_rfid:
+                cursor.execute('SELECT * FROM data WHERE rfid=%s and date=%s',(rfid,justcurrent_date)) 
+                datas = cursor.fetchone()
+               
                 
-            else:
-                cursor.execute('SELECT * FROM employees WHERE rfid=%s',(rfid)) 
-                account = cursor.fetchone()
-                print(account)
-                name =(account[3]+" "+account[4])
-                print(account)
-                img =account[1]  
-            
-                query= "INSERT INTO `data`(`rfid`, `img`, `emp_name`, `date`, `time_inAm`, `time_outAm`, `time_inPm`, `time_outPm`) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s)"
-                values = (rfid,img,name,justcurrent_date,"-","-",justcurrent_time,"-")
-                cursor.execute(query,values)
-                conn.commit()
-                flash('**Successfully Timed in**', 'success')
-         
-        else:
-            flash('**RFID not found!**', 'error')
-           
-    cursor.execute('SELECT * FROM data') 
-    datas = list(cursor.fetchall())
-    
-    return render_template("records.html",datas=datas)
-
-@app.route('/outam',methods=["POST", "GET"])
-def outam():
-    cursor.execute('SELECT * FROM employees') 
-    data = cursor.fetchall() 
-    all_rfid = [] 
-    for i in data:
-        all_rfid.append(i[2])
-        print(all_rfid)
-        
-    cursor.execute('SELECT * FROM data') 
-    datas = cursor.fetchall() 
-    all_date = []
-    all_drfid = [] 
-    for i in datas:
-        all_date.append(i[4])
-        all_drfid.append(i[1])
-        
-        
-    if request.method == "POST":
-        rfid=request.form['trfid'] 
-        
-        justcurrent_date = datetime.now().strftime("%Y-%m-%d")
-        justcurrent_time = datetime.now().strftime("%H:%M:%S")
-       
-      
-        if rfid in all_rfid:
-            if rfid in all_drfid and justcurrent_date in all_date:
-                query = "UPDATE data SET time_outAm=%s WHERE rfid=%s and date=%s"
-                values = (justcurrent_time,rfid,justcurrent_date)
-                cursor.execute(query, values)
-                conn.commit()
+                    
+                if datas :
+                    daTe=datas[4]
+                    timeout=datas[7]
+                    timein=datas[6]
                 
+                    
+                    if timein!="-" and timeout=="-":
+                        query = "UPDATE data SET time_out=%s WHERE rfid=%s and date=%s"
+                        values = (justcurrent_time,rfid,justcurrent_date)
+                        cursor.execute(query, values)
+                        conn.commit()
+                        res="success"
+                        flash('**Successfully Timed out', 'success')
+                        return render_template("land.html",timeout=timeout,daTe=" on "+ daTe,name=name,shift=shift,img=img,dep=dep,res=res,account=account)
+                    
+                    elif timein=="-" and timeout!="-":
+                            res="danger"
+                            flash('**Arlready timed out at ', 'success')
+                            return render_template("land.html",timeout=timeout,daTe="but no time in",name=name,shift=shift,img=img,dep=dep,res=res,account=account)
+                    elif timein!="-" and timeout!="-":
+                            res="danger"
+                            flash('**Arlready timed out at ', 'success')
+                            return render_template("land.html",timeout=timeout,daTe=" on "+ daTe,name=name,shift=shift,img=img,dep=dep,res=res,account=account)
+                    else:
+                        query = "UPDATE data SET time_in=%s WHERE rfid=%s and date=%s"
+                        values = (justcurrent_time,rfid,justcurrent_date)
+                        cursor.execute(query, values)
+                        conn.commit()
+                        res="success"
+                        flash('**Successfully Timed out', 'success')
+                        return render_template("land.html",timeout=timeout,daTe=" on "+ daTe,name=name,shift=shift,img=img,dep=dep,res=res,account=account)
+                    
+               
+                else:
+                    query= "INSERT INTO `data`(`rfid`, `img`, `emp_name`, `date`, `shift`,`time_in`, `time_out`) VALUES ( %s, %s, %s, %s, %s, %s, %s)"
+                    values = (rfid,img,name,justcurrent_date,shift,justcurrent_time,"-")
+                    cursor.execute(query,values)
+                    conn.commit()
+                    res="success"
+                    flash('**Successfully Timed in', 'success')
+                    return redirect('/user')
+              
             else:
-                cursor.execute('SELECT * FROM employees WHERE rfid=%s',(rfid)) 
-                account = cursor.fetchone()
-                print(account)
-                name =(account[3]+" "+account[4])
-                print(account)
-                img =account[1]  
-            
-                query= "INSERT INTO `data`(`rfid`, `img`, `emp_name`, `date`, `time_inAm`, `time_outAm`, `time_inPm`, `time_outPm`) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s)"
-                values = (rfid,img,name,justcurrent_date,"-",justcurrent_time,"-","-")
-                cursor.execute(query,values)
-                conn.commit()
-                flash('**Successfully Timed in**', 'success')
-         
+                res="danger"
+                flash('**RFID not found!**', 'error')
+                return render_template("land.html",res=res,account=account)
+   
         else:
-            flash('**RFID not found!**', 'error')
-           
-    cursor.execute('SELECT * FROM data') 
-    datas = list(cursor.fetchall())
+            res="danger"
+            flash('**No account found for the provided RFID!**', 'error')
+            return render_template("land.html",res=res,account=account)
     
-    return render_template("records.html",datas=datas)
-
-@app.route('/outpm',methods=["POST", "GET"])
-def outpm():
-    cursor.execute('SELECT * FROM employees') 
-    data = cursor.fetchall() 
-    all_rfid = [] 
-    for i in data:
-        all_rfid.append(i[2])
-        print(all_rfid)
         
-    cursor.execute('SELECT * FROM data') 
-    datas = cursor.fetchall() 
-    all_date = []
-    all_drfid = [] 
-    for i in datas:
-        all_date.append(i[4])
-        all_drfid.append(i[1])
-        
-        
-    if request.method == "POST":
-        rfid=request.form['trfid'] 
-        
-        justcurrent_date = datetime.now().strftime("%Y-%m-%d")
-        justcurrent_time = datetime.now().strftime("%H:%M:%S")
-       
-      
-        if rfid in all_rfid:
-            if rfid in all_drfid and justcurrent_date in all_date:
-                query = "UPDATE data SET time_outPm=%s WHERE rfid=%s and date=%s"
-                values = (justcurrent_time,rfid,justcurrent_date)
-                cursor.execute(query, values)
-                conn.commit()
-                
-            else:
-                cursor.execute('SELECT * FROM employees WHERE rfid=%s',(rfid)) 
-                account = cursor.fetchone()
-                print(account)
-                name =(account[3]+" "+account[4])
-                print(account)
-                img =account[1]  
-            
-                query= "INSERT INTO `data`(`rfid`, `img`, `emp_name`, `date`, `time_inAm`, `time_outAm`, `time_inPm`, `time_outPm`) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s)"
-                values = (rfid,img,name,justcurrent_date,"-","-","-",justcurrent_time)
-                cursor.execute(query,values)
-                conn.commit()
-                flash('**Successfully Timed in**', 'success')
-         
-        else:
-            flash('**RFID not found!**', 'error')
-           
-    cursor.execute('SELECT * FROM data') 
-    datas = list(cursor.fetchall())
-    
-    return render_template("records.html",datas=datas)
-       
-            
-       
             
              
-    
+@app.route("/loginAdmin",methods=["POST", "GET"])
+def loginAdmin():
+    if request.method == "POST":
+        session['username']=request.form['an']
+        session['passwrd']=request.form['apass']
+        
+        cursor.execute('SELECT * FROM admin WHERE username=%s and password=%s',(session['username'],session['passwrd'])) 
+        account = cursor.fetchone() 
+        
+        if account:
+            flash('**Welcome to PPES Admin!**', 'success')
+            return render_template("index.html")
+        else:
+            flash('*No Admin Account Found **', 'error')
+            return render_template("adminland.html")
+            
+        
 
 @app.route("/register",methods=["POST", "GET"])
 def register():
@@ -271,21 +169,46 @@ def register():
             img="static/assets/pics/" + file.filename	
             rfid=request.form['rfid']	
             fname=request.form['fn']		
-            lname=request.form['ln']		
+            lname=request.form['ln']	
+            shift=request.form['shift']		
             department=request.form['dep']		
             
             if rfid in all_rfid:
+                res="danger"
                 flash('**RFID already exist, Sign up again.**', 'error')
+                return render_template("register.html",res=res)
 
             else:
+                res="success"
                 flash('*Account successfully added!!!!!!*', 'success')
-                query = "INSERT INTO employees (id,img,rfid,fname,lname,department ) VALUES (%s, %s, %s, %s, %s, %s)"
-                values = (0,img,rfid,fname,lname,department)
+                query = "INSERT INTO employees (id,img,rfid,fname,shift,lname,department ) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                values = (0,img,rfid,fname,shift,lname,department)
                 cursor.execute(query, values)
                 conn.commit()
+                return render_template("register.html",res=res)
+        else:
+            res="danger"
+            flash('**cannot read the file**', 'error')
+            return render_template("register.html",res=res)
+    else:
+        return render_template("register.html")
+           
            
     
-    return render_template("register.html")
+    
+
+@app.route("/",methods=["POST", "GET"])
+def admin():
+    cursor.execute('SELECT * FROM data') 
+    datas = list(cursor.fetchall())
+    
+    return render_template("adminland.html",datas=datas)
+
+@app.route("/adminpg",methods=["POST", "GET"])
+def adminpg():
+    flash('**Welcome to PPES Admin!**', 'success')
+    return render_template("index.html")
+
 
 @app.route("/records",methods=["POST", "GET"])
 def records():
@@ -301,7 +224,11 @@ def emp_list():
     
     return render_template("emp_list.html", accounts = accounts)
 
-
+@app.route('/sign_out')
+def sign_out():
+    session.clear()
+    flash('you have been logged out', 'success')
+    return redirect(url_for('admin'))
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

@@ -36,90 +36,69 @@
   <body>
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo " href="{{url_for('index')}}">PPES DTR System</a>
-          <a class="sidebar-brand brand-logo-mini" href="{{url_for('index')}}">PPES DTR System</a>
+      <nav class="sidebar sidebar-offcanvas bg-primary" id="sidebar">
+        <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center  bg-primary justify-content-center fixed-top">
+          <a class="sidebar-brand brand-logo bg-primary" href="{{url_for('adminpg')}}">PPES DTR System</a>
+          <a class="sidebar-brand brand-logo-mini" href="{{url_for('records')}}">PPES DTR System</a>
         </div>
         <ul class="nav">
           <li class="nav-item nav-category">
-            <span class="nav-link">Navigation</span>
+            <span class="nav-link text-white"><i>Navigation</i></span>
           </li>
           <li class="nav-item menu-items">
             <a class="nav-link" href="{{url_for('records')}}">
-              <span class="menu-icon">
+              <span >
                 <i class="bi bi-card-checklist"></i>
               </span>
-              <span class="menu-title">Attendance Records</span>
+              <span class="menu-title text-white">Attendance Records</span>
             </a>
           </li>
           <li class="nav-item menu-items">
             <a class="nav-link"  href="{{url_for('emp_list')}}">
-              <span class="menu-icon">
+              <span >
                 <i class="bi bi-card-checklist"></i>
               </span>
-              <span class="menu-title" >List of Employees</span>
+              <span class="menu-title text-white" >List of Employees</span>
             </a>
           </li>
           <li class="nav-item menu-items">
             <a class="nav-link" href="{{url_for('register')}}">
-              <span class="menu-icon">
-                <i class="bi bi-pencil-square"></i>
+              <span class="">
+                <i class="bi bi-pencil-square text-warning"></i>
               </span>
               <span class="menu-title">Register</span>
             </a>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <span class="menu-icon">
-                <i class="mdi mdi-security"></i>
+            <a class="nav-link" href="{{url_for('sign_out')}}">
+              <span class="">
+                <i class="bi bi-pencil-square text-warning"></i>
               </span>
-              <span class="menu-title">Time In</span>
-              <i class="menu-arrow"></i>
+              <span class="menu-title text-white">Sign out</span>
             </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" data-toggle="modal" data-target="#inam">IN AM </a></li>
-                <li class="nav-item"> <a class="nav-link" data-toggle="modal" data-target="#inpm"> IN PM</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#out" aria-expanded="false" aria-controls="auth">
-              <span class="menu-icon">
-                <i class="mdi mdi-security"></i>
-              </span>
-              <span class="menu-title">Time Out</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="out">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" data-toggle="modal" data-target="#outam">OUT AM </a></li>
-                <li class="nav-item"> <a class="nav-link" data-toggle="modal" data-target="#outpm"> OUT PM</a></li>
-              </ul>
-            </div>
           </li>
         </ul>
       </nav>
       <!-- partial -->
       
         <!-- partial -->
-        <div class="main-panel">
+        <div class="main-panel bg-white text-dark">
            <center>
-            <h1> WELCOME to PPES DTR System </h1>
-            <h4>Pavia Pilot Elementary School DTR System</h4>
+            <p class="card-description">  {% with messages = get_flashed_messages() %}
+              {% if messages %}
+
+                  
+                  {% for message in messages %}
+                  <h1  class="text-success text-center"> {{ message }} </h1>
+                  <h4>Pavia Pilot Elementary School DTR System</h4>     
+                     
+                  {% endfor %}
+                  
+              {% endif %}
+          {% endwith %} </p>
            
             <div style="margin-top:70px;">
-              <p class="card-description">  {% with messages = get_flashed_messages() %}
-                {% if messages %}
-  
-                    
-                    {% for message in messages %}
-                        <h6 class="text-white text-center" style="color:red;">{{ message }}</h6>
-                    {% endfor %}
-                    
-                {% endif %}
-            {% endwith %} </p>
+             
               <h4>Date Today:</h4>
               <div id="date" style="font-size: 24px;margin-right: 10px;"></div>
               <div id="clock"style="font-size: 24px;margin-right: 10px;"></div>
@@ -250,9 +229,9 @@
         
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
-          <footer class="footer justify-content-bottom">
+          <footer class="footer justify-content-bottom bg-primary">
             <div class="d-sm-flex justify-content-bottom justify-content-sm-between">
-              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © PPES DTR System 2024</span>
+              <span class="text-whitw d-block text-center text-sm-left d-sm-inline-block">Copyright © PPES DTR System 2024</span>
             </div>
           </footer>
           <!-- partial -->
